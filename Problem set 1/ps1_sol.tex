@@ -83,7 +83,7 @@ $$
 
 \ifsolution \solution{}
 %%% PROBLEM 1(a) SOLUTION START %%%
-1, 2, 3, 4
+1$f_3(n)$, 2$f_1(n)$, 3$f_2(n)$, 4$f_4(n)$
 %%% PROBLEM 1(a) SOLUTION END %%%
 \fi
 
@@ -100,7 +100,7 @@ $$
 
 \ifsolution \solution{}
 %%% PROBLEM 1(b) SOLUTION START %%%
-1, 2, 3, 4
+1$f_1(n)$, 2$f_4(n)$, 3$f_3(n)$, 4$f_2(n)$
 %%% PROBLEM 1(b) SOLUTION END %%%
 \fi
 
@@ -117,7 +117,7 @@ $$
 
 \ifsolution \solution{}
 %%% PROBLEM 1(c) SOLUTION START %%%
-1, 2, 3, 4
+1$f_1(n)$, 2$f_4(n)$, 3$f_3(n)$, 4$f_2(n)$
 %%% PROBLEM 1(c) SOLUTION END %%%
 \fi
 
@@ -270,7 +270,7 @@ and which are efficient.
 
 \ifsolution \solution{}
 %%% PROBLEM 3(c) SOLUTION START %%%
-1
+2
 %%% PROBLEM 3(c) SOLUTION END %%%
 \fi
 
@@ -304,7 +304,7 @@ and which are efficient.
 
 \ifsolution \solution{}
 %%% PROBLEM 4(a) SOLUTION START %%%
-1
+3
 %%% PROBLEM 4(a) SOLUTION END %%%
 \fi
 
@@ -320,7 +320,7 @@ and which are efficient.
 
 \ifsolution \solution{}
 %%% PROBLEM 4(b) SOLUTION START %%%
-1
+5
 %%% PROBLEM 4(b) SOLUTION END %%%
 \fi
 
@@ -336,7 +336,7 @@ and which are efficient.
 
 \ifsolution \solution{}
 %%% PROBLEM 4(c) SOLUTION START %%%
-1
+2
 %%% PROBLEM 4(c) SOLUTION END %%%
 \fi
 
@@ -352,7 +352,7 @@ and which are efficient.
 
 \ifsolution \solution{}
 %%% PROBLEM 4(d) SOLUTION START %%%
-1
+2
 %%% PROBLEM 4(d) SOLUTION END %%%
 \fi
 
@@ -447,7 +447,84 @@ Hence, we have a contradiction.
 
 \ifsolution \solution{}
 %%% PROBLEM 5 SOLUTION START %%%
-Write your proof here.
+\begin{quote}
+We wish to show that \texttt{algorithm4}
+will always return a peak,
+as long as the problem is not empty.
+To that end,
+we wish to prove the following two statements:
+
+\textbf{1. If the peak problem is not empty,
+    then   \texttt{algorithm4}   will always return a location.}
+Say that we start with a problem of size $m \times n$. Depending on
+whether the algorithm is splitting the rows or the columns,
+the recursive subproblem examined by \texttt{algorithm4}
+will have dimensions $n \times \lfloor m / 2 \rfloor$,
+$n \times \left(m - \lfloor m / 2 \rfloor - 1 \right)$,
+$m \times \lfloor n / 2 \rfloor$ or
+$m \times \left(n - \lfloor n / 2 \rfloor - 1 \right)$.
+Therefore, with each recursive call, either the number of rows or
+the number of columns strictly decreases, as long as both are greater
+than zero.
+So \texttt{algorithm4} either halts and returns a location at some point,
+or eventually examines a subproblem with a non-positive
+number of columns or rows.
+The only way for the number of columns or rows to become strictly negative,
+according to the formulas that determine the size of the subproblem,
+is to have $n = 0$ or $m = 0$ at some point.
+So if \texttt{algorithm4} doesn't return a location,
+it must eventually examine an empty subproblem.
+
+We wish to show that there is no way that this can occur.
+Assume, to the contrary,
+that \texttt{algorithm4} does examine an empty subproblem.
+Without loss of generality, say that the algorithm split
+the columns just prior to this.
+Then at this point in the algorithm
+it must examine a subproblem of size
+$m \times 1$ or $m \times 2$.
+If the problem is of size $m \times 1$,
+then calculating the maximum of the central column
+is equivalent to calculating the maximum of the entire problem.
+Hence, the maximum that the algorithm finds must be a peak,
+and it will halt and return the location.
+If the problem has dimensions $m \times 2$,
+then there are two possibilities:
+either the maximum of the central column is a peak
+(in which case the algorithm will halt and return the location),
+or it has a strictly better neighbor in the other column
+(in which case the algorithm will recurse
+on the subproblem with dimensions $m \times 1$,
+thereby ensuring that the algorithm will always recurse into
+the non-empty subproblem).
+So \texttt{algorithm4} can never recurse into an empty subproblem,
+and therefore \texttt{algorithm4} must eventually return a location.
+
+\textbf{2. If   \texttt{algorithm4}   returns a location,
+    it will be a peak in the original problem.}
+If \texttt{algorithm4} returns a location $(r_1, c_1)$,
+then that location must have been a peak within some recursive subproblem.
+In addition, if $(r_2,c_2)$ is the location of the best location seen during
+the execution of the algorithm (that is, the location stored in the variable
+$bestSeen$), it must be that $val(r_1,c_1) >= val(r_2,c_2)$.
+Assume, for the sake of contradiction,
+that $(r_1, c_1)$ is not a peak within the original problem.
+Then as the location $(r_1, c_1)$ is passed up the chain of recursive calls,
+it must eventually reach a level where it stops being a peak.
+Hence, it must be that the subproblem considered at that level includes
+some neighbor $(r_3,c_3)$ of $(r_1,c-1)$ with value
+$val(r_1,c_1) < val(r_3,c_3)$.
+    In order for $(r_3,c_3)$ to be adjacent to the recursive subproblem,
+    but not included, it has to have been in the dividing row or dividing column.
+    Therefore, $(r_3,c_3)$ must have been examined during the progression
+    of the algorithm.
+    As a result, it must be that $val(r_3,c_3) <= val(r_2,c_2)$.
+    Hence, we have the following chain of inequalities:
+    \[
+        val(r_1,c_1) < val(r_3,c_3) <= val(r_2,c_2) <= val(r_1,c_1).
+    \]
+    This results in a contradiction.
+\end{quote}
 %%% PROBLEM 5 SOLUTION END %%%
 \fi
 
@@ -462,19 +539,13 @@ that is not a peak).
 %%% PROBLEM 6 SOLUTION START %%%
 \begin{verbatim}
 problemMatrix = [
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0]
-]
-
-problemMatrix = [
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0]
+    [0, 0, 9, 8, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0, 0],
+    [0, 2, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0]
 ]
 \end{verbatim}
 %%% PROBLEM 6 SOLUTION END %%%

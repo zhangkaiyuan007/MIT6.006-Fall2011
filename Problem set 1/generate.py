@@ -38,7 +38,7 @@ def main():
     
     generated = randomProblem(rows, cols, maximum)
 
-    print("Generated a matrix with %d row and %d columns." % (rows, cols))
+    print(("Generated a matrix with %d row and %d columns." % (rows, cols)))
     if filename is None:
         filename = utils.getSaveFilename("problem.py")
         if filename is None:

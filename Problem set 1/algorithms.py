@@ -23,7 +23,7 @@ def algorithm1(problem, trace = None):
     subproblems.append((subStartR, subStartC2, subNumR, subNumC2))
 
     # get a list of all locations in the dividing column
-    divider = crossProduct(range(problem.numRow), [mid])
+    divider = crossProduct(list(range(problem.numRow)), [mid])
 
     # find the maximum in the dividing column
     bestLoc = problem.getMaximum(divider, trace)
@@ -85,8 +85,8 @@ def algorithm3(problem, bestSeen = None, trace = None):
     # middle column)
     cross = []
 
-    cross.extend(crossProduct([midRow], range(problem.numCol)))
-    cross.extend(crossProduct(range(problem.numRow), [midCol]))
+    cross.extend(crossProduct([midRow], list(range(problem.numCol))))
+    cross.extend(crossProduct(list(range(problem.numRow)), [midCol]))
 
     crossLoc = problem.getMaximum(cross, trace)
     neighbor = problem.getBetterNeighbor(crossLoc, trace)
@@ -130,7 +130,7 @@ def algorithm4(problem, bestSeen = None, rowSplit = True, trace = None):
         subproblems.append((subStartR2, subStartC, subNumR2, subNumC))
 
         # get a list of all locations in the dividing column
-        divider = crossProduct([mid], range(problem.numCol))
+        divider = crossProduct([mid], list(range(problem.numCol)))
     else:
         # the recursive subproblem will involve half the number of columns
         mid = problem.numCol // 2
@@ -144,7 +144,7 @@ def algorithm4(problem, bestSeen = None, rowSplit = True, trace = None):
         subproblems.append((subStartR, subStartC2, subNumR, subNumC2))
 
         # get a list of all locations in the dividing column
-        divider = crossProduct(range(problem.numRow), [mid])
+        divider = crossProduct(list(range(problem.numRow)), [mid])
 
     # find the maximum in the dividing row or column
     bestLoc = problem.getMaximum(divider, trace)

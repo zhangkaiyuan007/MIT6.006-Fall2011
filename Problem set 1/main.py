@@ -43,7 +43,7 @@ def main():
         if problem.isPeak(peak):
             status = "is a peak"
 
-        print(name + " : " + str(peak) + " => " + status)
+        print((name + " : " + str(peak) + " => " + status))
 
     # write the trace out to a file
     with open("trace.jsonp", "w") as traceFile:

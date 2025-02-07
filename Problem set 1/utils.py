@@ -11,7 +11,7 @@ def getOpenFilename(default = None):
         prompt += (" (default: %s)" % default)
     prompt += ": "
 
-    filename = raw_input(prompt)
+    filename = input(prompt)
     if filename == "" and not (default is None):
         filename = default
 
@@ -29,17 +29,17 @@ def getSaveFilename(default = None):
         prompt += (" (default: %s)" % default)
     prompt += ": "
 
-    filename = raw_input(prompt)
+    filename = input(prompt)
     if filename == "" and not (default is None):
         filename = default
 
     if os.path.exists(filename):
-        print("The file %s already exists." % filename)
+        print(("The file %s already exists." % filename))
         prompt = ("Overwrite (o), enter another name (f), or cancel (c)? ")
         
-        check = raw_input(prompt)
+        check = input(prompt)
         while (check != "o" and check != "f" and check != "c"):
-            check = raw_input(prompt)
+            check = input(prompt)
 
         if check == "o":
             return filename
